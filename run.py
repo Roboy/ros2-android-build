@@ -47,13 +47,13 @@ def setupRos2Java(workspacePath: pathlib.Path):
     if not os.path.exists(srcDirPath):
         os.makedirs(srcDirPath)
         print('start cloning ros2java related packages')
-        command = f'docker run -it --rm --net=host -v {workspacePath}:/home/user/workspace ros2java-android-build vcs import --input /home/user/workspace/ros2_java_android.repos /home/user/workspace/src'
+        command = f'docker run --platform=linux/amd64 -it --rm --net=host -v {workspacePath}:/home/user/workspace ros2java-android-build vcs import --input /home/user/workspace/ros2_java_android.repos /home/user/workspace/src'
         subprocess.run(command, shell=True)
 
 
 def build(workspacePath: pathlib.Path):
     print('start building packages')
-    command = f'docker run -it --rm --net=host -v {workspacePath}:/home/user/workspace ros2java-android-build /home/user/build-android.sh'
+    command = f'docker run --platform=linux/amd64 -it --rm --net=host -v {workspacePath}:/home/user/workspace ros2java-android-build /home/user/build-android.sh'
     subprocess.run(command, shell=True)
 
 def output(workspacePath: pathlib.Path, soOutPath: pathlib.Path, jarOutPath: pathlib.Path):

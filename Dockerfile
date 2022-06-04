@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM --platform=linux/amd64 ubuntu:20.04
 
 # setup non-root user
 ARG USERNAME=user
@@ -15,12 +15,14 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 ENV ANDROID_NDK_VERSION android-ndk-r23b
 ENV ANDROID_TARGET android-21
-ENV ANDROID_ABI arm64-v8a
-ENV ANDROID_TOOLCHAIN_NAME aarch64-linux-android
+# https://developer.android.com/ndk/guides/abis
+ENV ANDROID_ABI x86_64
+# https://developer.android.com/ndk/guides/standalone_toolchain
+ENV ANDROID_TOOLCHAIN_NAME x86_64-linux-android
 
 ENV ANDROID_NDK /opt/android/${ANDROID_NDK_VERSION}
 ENV CMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake
-ENV TZ=Asia/Tokyo
+ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt update

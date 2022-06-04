@@ -6,7 +6,7 @@ Build rcljava for android.
 ## Versions & Envs
 
 - NDK:  android-ndk-r23b
-- ABI: arm64-v8a  
+- ABI: x86_64  
 - Android API Level(minSdkVersion): android-21
 
 ## ROS2 java version  
@@ -19,11 +19,13 @@ https://raw.githubusercontent.com/ros2-java/ros2_java/434e6f55253bfe2cb9ce34799f
 ### 1. Build docker image
 ```
 docker build -t ros2java-android-build ./
+docker build --platform linux/amd64 -t ros2java-android-build ./
 ```
 
 ### 2. Build
 ```
 python3 run.py ./out/soOut ./out/jarOut --srcDir ../src 
+python3 run.py ../ros2-android-test-app/app/src/main/jniLibs/x86_64 ../ros2-android-test-app/app/libs  --srcDir ../ros2-android-test-app/app/src
 ```
 First and Second argument specifies where to copy build results.  
 Eg. Specify `libs` and `jniLibs` dir of your Android project to copy `.jar` file and `.so` files.  
